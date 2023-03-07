@@ -25,8 +25,6 @@ export default function Home() {
         IConversationItem[]
     >([]);
 
-    console.log({ message, conversationItems });
-
     const addConversationItem = (
         item: Omit<IConversationItem, "timestamp">
     ) => {
