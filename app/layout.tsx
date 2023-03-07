@@ -12,10 +12,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className="p-5 bg-slate-800 text-slate-200 text-sm h-screen">
-                {children}
-            </body>
-        </html>
+        <>
+            <script src="public/sw.js" async />
+
+            <html lang="en">
+                <body className="p-5 bg-slate-800 text-slate-200 text-sm h-screen">
+                    {children}
+                </body>
+            </html>
+        </>
     );
 }
