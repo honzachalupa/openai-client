@@ -14,7 +14,6 @@ export default function RootLayout({
     return (
         <>
             <link rel="manifest" href="/manifest.json" />
-            <script src="/sw.js" async />
 
             <html lang="en">
                 <body className="p-5 bg-slate-800 text-slate-200 text-sm h-screen">

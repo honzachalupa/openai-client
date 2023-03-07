@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 import moment from "moment";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import config from "../config";
 import { CREATE_CHAT_COMPLETION_ROUTE } from "./api/create-chat-completion/route";
 
@@ -76,6 +76,27 @@ export default function Home() {
             message: data.choices[0].message.content,
         });
     };
+
+    useEffect(() => {
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker.register("/sw.js").then(
+                    function (registration) {
+                        console.log(
+                            "Service Worker registration successful with scope: ",
+                            registration.scope
+                        );
+                    },
+                    function (err) {
+                        console.log(
+                            "Service Worker registration failed: ",
+                            err
+                        );
+                    }
+                );
+            });
+        }
+    }, []);
 
     return (
         <div className="flex flex-col h-full">
