@@ -6,4 +6,5 @@ export enum ERoleLabels {
 export enum ETypeLabels {
     message = "Message",
     image = "Image",
+    error = "Error",
 }

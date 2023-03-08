@@ -84,6 +84,17 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
         return contentSnapshot;
     };
 
+    const handleException = (request: IConversationItem) => {
+        addConversationItem({
+            role: "assistant",
+            type: "error",
+            content: "Unknown error occurred. Please try again later.",
+            request,
+        });
+
+        setIsLoading(false);
+    };
+
     const generateMessage = async (contentOverwrite?: string) => {
         const content = onBeforeGenerate(contentOverwrite);
 
@@ -104,6 +115,8 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
                     role,
                 })),
             },
+        }).catch(() => {
+            handleException(request);
         });
 
         addConversationItem({
@@ -133,6 +146,8 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
                 description: content,
                 size: 512,
             },
+        }).catch(() => {
+            handleException(request);
         });
 
         addConversationItem({
