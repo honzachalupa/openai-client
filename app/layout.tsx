@@ -24,7 +24,7 @@ export default function RootLayout({
             />
 
             <html lang="en">
-                <body className="px-3 bg-black text-slate-200 text-sm h-full overscroll-none">
+                <body className="px-3 bg-black text-slate-200 text-sm h-full overscroll-none pb-safe ">
                     <Navigation />
 
                     <ContextWrapper>{children}</ContextWrapper>

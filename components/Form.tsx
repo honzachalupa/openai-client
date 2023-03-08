@@ -24,13 +24,19 @@ export const Form: React.FC = () => {
         setContent(debouncedValue);
     }, [debouncedValue]);
 
+    useEffect(() => {
+        if (!content) {
+            setValue(content);
+        }
+    }, [content]);
+
     return (
         <div className="mt-auto flex flex-col pb-3">
             <textarea
                 title="Message"
                 value={value}
                 placeholder="What's your request?"
-                className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px] text-[16px]"
+                className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px] text-[16px] rounded-none"
                 disabled={isLoading}
                 onChange={onMessageChange}
             />

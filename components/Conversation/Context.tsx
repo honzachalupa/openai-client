@@ -32,8 +32,6 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
     const [context, setContext] = useState<IContext>(initialContext);
     const [isMounted, setIsMounted] = useState<boolean>();
 
-    console.log(context.items);
-
     const setContent = (value: string) => {
         setContext((prevContext) => ({
             ...prevContext,
@@ -69,13 +67,6 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
 
     const onBeforeGenerate = (contentOverwrite?: string) => {
         setIsLoading(true);
-
-        console.log(
-            777,
-            contentOverwrite,
-            context.content,
-            contentOverwrite || context.content
-        );
 
         const contentSnapshot = contentOverwrite || context.content;
 
