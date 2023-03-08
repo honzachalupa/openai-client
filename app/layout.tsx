@@ -16,7 +16,7 @@ export default function RootLayout({
             <link rel="manifest" href="/manifest.json" />
 
             <html lang="en">
-                <body className="p-5 bg-slate-800 text-slate-200 text-sm h-screen">
+                <body className="p-5 bg-black text-slate-200 text-sm h-full">
                     {children}
                 </body>
             </html>

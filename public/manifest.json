@@ -1,6 +1,6 @@
 {
-    "theme_color": "#0d0d0d",
-    "background_color": "#0d0d0d",
+    "theme_color": "black",
+    "background_color": "black",
     "display": "standalone",
     "scope": "/",
     "start_url": "/?pwa=true",

@@ -1,80 +1,19 @@
 "use client";
 
-import cx from "classnames";
-import moment from "moment";
+import { useLocalStorage } from "@react-hooks-library/core";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { Button } from "../components/Button";
+import { Conversation, IConversationRef } from "../components/Conversation";
 import config from "../config";
-import { CREATE_CHAT_COMPLETION_ROUTE } from "./api/create-chat-completion/route";
-
-enum ERoleLabels {
-    user = "User",
-    assistant = "Assistant",
-}
-
-interface IConversationItem {
-    role: keyof typeof ERoleLabels;
-    message: string;
-    timestamp: string;
-}
 
 export default function Home() {
-    const formRef = useRef<HTMLFormElement>(null);
+    const conversationRef = useRef<IConversationRef>();
 
-    const [message, setMessage] = useState<string>("");
-    const [conversationItems, setConversationItems] = useState<
-        IConversationItem[]
-    >([]);
-
-    const addConversationItem = (
-        item: Omit<IConversationItem, "timestamp">
-    ) => {
-        const conversationItem = {
-            ...item,
-            timestamp: moment().format(),
-        };
-
-        setConversationItems((prevState) => [...prevState, conversationItem]);
-    };
+    const [content, setContent] = useLocalStorage<string>("content", "");
+    const [isLoading, setIsLoading] = useState<boolean>();
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setMessage(e.target.value!);
-    };
-
-    const onEnterPress = (e: any) => {
-        if (e.keyCode == 13 && e.shiftKey == false) {
-            e.preventDefault();
-
-            formRef.current?.submit();
-        }
-    };
-
-    const onSubmit = async (e: any) => {
-        e.preventDefault();
-
-        addConversationItem({
-            role: "user",
-            message,
-        });
-
-        const response = await fetch(CREATE_CHAT_COMPLETION_ROUTE, {
-            method: "POST",
-            body: JSON.stringify({
-                message,
-            }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data);
-        }
-
-        setMessage("");
-
-        addConversationItem({
-            role: "assistant",
-            message: data.choices[0].message.content,
-        });
+        setContent(e.target.value!);
     };
 
     useEffect(() => {
@@ -102,43 +41,48 @@ export default function Home() {
         <div className="flex flex-col h-full">
             <h1 className="text-xl">{config.appName}</h1>
 
-            <section>
-                {conversationItems.map(({ message, role }, i) => (
-                    <article
-                        key={i}
-                        className={cx("my-5 last:border-none last:pb-0", {
-                            "border-gray-600 border-b-[1px] border-dashed pb-5":
-                                role === "assistant" &&
-                                conversationItems.length >= 4,
-                        })}
-                    >
-                        <p className="opacity-50 mb-1">{ERoleLabels[role]}:</p>
+            <Conversation
+                // @ts-ignore
+                ref={conversationRef}
+                content={content}
+                onResetContent={() => setContent("")}
+                onLoadingChanged={setIsLoading}
+            />
 
-                        <p>{message}</p>
-                    </article>
-                ))}
-            </section>
-
-            <form
-                ref={formRef}
-                className="mt-auto flex flex-col"
-                onSubmit={onSubmit}
-            >
+            <div className="mt-auto flex flex-col">
                 <textarea
                     title="Message"
-                    defaultValue={message}
+                    value={content}
+                    placeholder="What's your request?"
                     className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px]"
                     onChange={onMessageChange}
-                    onKeyDown={onEnterPress}
                 />
 
-                <button
-                    type="submit"
-                    className="self-end px-5 py-2 bg-white bg-opacity-10"
-                >
-                    Submit
-                </button>
-            </form>
+                <div className="flex justify-end">
+                    <Button
+                        label="Generate image"
+                        isDisabled={content.length < 5}
+                        className="mr-2"
+                        onClick={() =>
+                            conversationRef.current?.handleGenerateImage()
+                        }
+                    />
+
+                    <Button
+                        label="Send"
+                        isDisabled={content.length < 5}
+                        onClick={() =>
+                            conversationRef.current?.handleSendMessage()
+                        }
+                    />
+                </div>
+            </div>
+
+            {isLoading && (
+                <div className="w-screen h-screen fixed bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center top-0">
+                    <p>Working on it...</p>
+                </div>
+            )}
         </div>
     );
 }

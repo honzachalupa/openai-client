@@ -1,22 +1,15 @@
 import { NextResponse } from "next/server";
 import { OpenAI } from "../../../utils/openai";
 
-export const CREATE_CHAT_COMPLETION_ROUTE = "/api/create-chat-completion";
+export const CREATE_IMAGE = "/api/create-image";
 
 export async function POST(request: Request) {
-    const { content, history } = await request.json();
+    const { description } = await request.json();
 
-    console.log(666, history);
-
-    const response = await OpenAI.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-            ...history,
-            {
-                role: "user",
-                content,
-            },
-        ],
+    const response = await OpenAI.createImage({
+        prompt: description,
+        n: 1,
+        size: "512x512",
     });
 
     /*
