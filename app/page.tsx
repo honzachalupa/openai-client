@@ -43,7 +43,11 @@ export default function Home() {
                 </>
             ) : (
                 <>
-                    <p>Missing API key</p>
+                    <h3>Welcome</h3>
+
+                    <p className="text-sm opacity-70 my-2">
+                        Please start with adding your OpenAI API key
+                    </p>
 
                     <Link label="Add API key" href="/settings" />
                 </>

@@ -32,7 +32,6 @@ export const Form: React.FC = () => {
                 placeholder="What's your request?"
                 className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px] text-[16px]"
                 disabled={isLoading}
-                autoComplete="off"
                 onChange={onMessageChange}
             />
 
