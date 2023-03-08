@@ -25,7 +25,8 @@ export default function Settings() {
                 title="OpenAI API key"
                 defaultValue={apiKeyLS}
                 placeholder="sk-..."
-                className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px]"
+                className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px] text-[16px]"
+                autoComplete="off"
                 onChange={onTokenChange}
             />
 
