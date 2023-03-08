@@ -18,8 +18,13 @@ export default function RootLayout({
         <>
             <link rel="manifest" href="/manifest.json" />
 
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+            />
+
             <html lang="en">
-                <body className="px-3 bg-black text-slate-200 text-sm h-full">
+                <body className="px-3 bg-black text-slate-200 text-sm h-full overscroll-none">
                     <Navigation />
 
                     <ContextWrapper>{children}</ContextWrapper>

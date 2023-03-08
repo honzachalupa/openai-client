@@ -40,13 +40,13 @@ export const Form: React.FC = () => {
                     label="Generate image"
                     isDisabled={isLoading || content.length < 5}
                     className="mr-2"
-                    onClick={generateImage}
+                    onClick={() => generateImage()}
                 />
 
                 <Button
                     label="Send"
                     isDisabled={isLoading || content.length < 5}
-                    onClick={generateMessage}
+                    onClick={() => generateMessage()}
                 />
             </div>
         </div>

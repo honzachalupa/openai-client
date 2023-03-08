@@ -15,11 +15,10 @@ interface IProps {
 }
 
 export const Item: React.FC<IProps> = ({
-    data: { content, imageUrl, role, type, timestamp },
+    data: { content, imageUrl, role, type, timestamp, request },
     isLastItem,
 }) => {
-    const { generateMessage, generateImage, setIsLoading } =
-        useContext(Context);
+    const { regenerate, setIsLoading } = useContext(Context);
 
     const scrollRef = useRef(null);
 
@@ -51,7 +50,7 @@ export const Item: React.FC<IProps> = ({
 
             <p className="opacity-50 mb-1 text-xs">{ERoleLabels[role]}</p>
 
-            {type === "message" ? (
+            {type === "message" || !imageUrl ? (
                 <MessageContent value={content} />
             ) : type === "image" ? (
                 <ImageContent
@@ -64,9 +63,7 @@ export const Item: React.FC<IProps> = ({
                 <Button
                     label="Try a different response"
                     className="mt-2 self-end"
-                    onClick={
-                        type === "message" ? generateMessage : generateImage
-                    }
+                    onClick={() => regenerate(request!)}
                 />
             )}
         </article>

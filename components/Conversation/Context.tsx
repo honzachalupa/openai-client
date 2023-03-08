@@ -18,6 +18,7 @@ const initialContext = {
     isLoading: false,
     generateMessage: () => {},
     generateImage: () => {},
+    regenerate: (item: IConversationItem) => {},
     setContent: (value: string) => {},
     setIsLoading: (value: boolean) => {},
 };
@@ -30,6 +31,8 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
     const [apiKey] = useLocalStorage("apiKey", "");
     const [context, setContext] = useState<IContext>(initialContext);
     const [isMounted, setIsMounted] = useState<boolean>();
+
+    console.log(context.items);
 
     const setContent = (value: string) => {
         setContext((prevContext) => ({
@@ -64,18 +67,25 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
         }));
     };
 
-    const onBeforeGenerate = () => {
+    const onBeforeGenerate = (contentOverwrite?: string) => {
         setIsLoading(true);
 
-        const contentSnapshot = context.content;
+        console.log(
+            777,
+            contentOverwrite,
+            context.content,
+            contentOverwrite || context.content
+        );
+
+        const contentSnapshot = contentOverwrite || context.content;
 
         setContent("");
 
         return contentSnapshot;
     };
 
-    const generateMessage = async () => {
-        const content = onBeforeGenerate();
+    const generateMessage = async (contentOverwrite?: string) => {
+        const content = onBeforeGenerate(contentOverwrite);
 
         const request: IConversationItem = {
             role: "user",
@@ -106,12 +116,12 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
         setIsLoading(false);
     };
 
-    const generateImage = async () => {
-        const content = onBeforeGenerate();
+    const generateImage = async (contentOverwrite?: string) => {
+        const content = onBeforeGenerate(contentOverwrite);
 
         const request: IConversationItem = {
             role: "user",
-            type: "message",
+            type: "image",
             content,
         };
 
@@ -121,6 +131,7 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
             apiKey,
             data: {
                 description: content,
+                size: 512,
             },
         });
 
@@ -133,9 +144,18 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
         });
     };
 
+    const regenerate = (item: IConversationItem) => {
+        if (item.type === "image") {
+            generateImage(item.content);
+        } else {
+            generateMessage(item.content);
+        }
+    };
+
     const functions = {
         generateMessage,
         generateImage,
+        regenerate,
         setContent,
         setIsLoading,
     };
