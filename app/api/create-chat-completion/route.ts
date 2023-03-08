@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
-import { OpenAI } from "../../../utils/openai";
+import { Configuration, OpenAIApi } from "openai";
 
 export const CREATE_CHAT_COMPLETION_ROUTE = "/api/create-chat-completion";
 
 export async function POST(request: Request) {
-    const { content, history } = await request.json();
+    const {
+        apiKey,
+        data: { content, history },
+    } = await request.json();
 
-    console.log(666, history);
+    const configuration = new Configuration({
+        apiKey,
+    });
+
+    const OpenAI = new OpenAIApi(configuration);
 
     const response = await OpenAI.createChatCompletion({
         model: "gpt-3.5-turbo",

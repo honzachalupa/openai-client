@@ -1,15 +1,24 @@
 import { NextResponse } from "next/server";
-import { OpenAI } from "../../../utils/openai";
+import { Configuration, CreateImageRequestSizeEnum, OpenAIApi } from "openai";
 
 export const CREATE_IMAGE = "/api/create-image";
 
 export async function POST(request: Request) {
-    const { description } = await request.json();
+    const {
+        apiKey,
+        data: { description, size },
+    } = await request.json();
+
+    const configuration = new Configuration({
+        apiKey,
+    });
+
+    const OpenAI = new OpenAIApi(configuration);
 
     const response = await OpenAI.createImage({
         prompt: description,
         n: 1,
-        size: "512x512",
+        size: `${size}x${size}` as CreateImageRequestSizeEnum,
     });
 
     /*

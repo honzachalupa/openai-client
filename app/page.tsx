@@ -1,33 +1,27 @@
 "use client";
 
+import { Conversation } from "@/components/Conversation";
+import { Form } from "@/components/Form";
+import { Link } from "@/components/Link";
+import config from "@/config";
 import { useLocalStorage } from "@react-hooks-library/core";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Button } from "../components/Button";
-import { Conversation, IConversationRef } from "../components/Conversation";
-import config from "../config";
+import { useEffect } from "react";
 
 export default function Home() {
-    const conversationRef = useRef<IConversationRef>();
-
-    const [content, setContent] = useLocalStorage<string>("content", "");
-    const [isLoading, setIsLoading] = useState<boolean>();
-
-    const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(e.target.value!);
-    };
+    const [apiKey] = useLocalStorage("apiKey", "");
 
     useEffect(() => {
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker.register("/sw.js").then(
                     function (registration) {
-                        console.log(
+                        console.info(
                             "Service Worker registration successful with scope: ",
                             registration.scope
                         );
                     },
                     function (err) {
-                        console.log(
+                        console.info(
                             "Service Worker registration failed: ",
                             err
                         );
@@ -38,50 +32,21 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="flex flex-col h-full">
-            <h1 className="text-xl">{config.appName}</h1>
+        <div className="flex flex-col h-screen">
+            <h1 className="text-xl pt-3 pb-2">{config.appName}</h1>
 
-            <Conversation
-                // @ts-ignore
-                ref={conversationRef}
-                content={content}
-                onResetContent={() => setContent("")}
-                onLoadingChanged={setIsLoading}
-            />
+            {apiKey ? (
+                <>
+                    <Conversation />
 
-            <div className="mt-auto flex flex-col">
-                <textarea
-                    title="Message"
-                    value={content}
-                    placeholder="What's your request?"
-                    className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px]"
-                    onChange={onMessageChange}
-                />
+                    <Form />
+                </>
+            ) : (
+                <>
+                    <p>Missing API key</p>
 
-                <div className="flex justify-end">
-                    <Button
-                        label="Generate image"
-                        isDisabled={content.length < 5}
-                        className="mr-2"
-                        onClick={() =>
-                            conversationRef.current?.handleGenerateImage()
-                        }
-                    />
-
-                    <Button
-                        label="Send"
-                        isDisabled={content.length < 5}
-                        onClick={() =>
-                            conversationRef.current?.handleSendMessage()
-                        }
-                    />
-                </div>
-            </div>
-
-            {isLoading && (
-                <div className="w-screen h-screen fixed bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center top-0">
-                    <p>Working on it...</p>
-                </div>
+                    <Link label="Add API key" href="/settings" />
+                </>
             )}
         </div>
     );
