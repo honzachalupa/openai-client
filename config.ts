@@ -1,5 +1,5 @@
 const config = {
-    appName: "AI Assistant",
+    appName: "OpenAI Client",
 };
 
 export default config;

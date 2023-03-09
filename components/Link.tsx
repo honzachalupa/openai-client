@@ -12,7 +12,7 @@ export const Link: React.FC<IProps> = ({ label, href, className, onClick }) => (
     <NextLink
         href={href}
         className={cx(
-            "px-5 py-2 bg-white bg-opacity-20 text-center",
+            "px-5 py-3 bg-black bg-opacity-40 text-center",
             className
         )}
         onClick={onClick}

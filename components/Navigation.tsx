@@ -30,15 +30,15 @@ export const Navigation: React.FC = () => {
     return (
         <div className="absolute top-0 right-0 z-10">
             <RxHamburgerMenu
-                className="w-10 h-10 p-2 self-end ml-auto text-right relative z-20"
+                className="w-10 h-10 p-2 self-end ml-auto text-right relative -top-1 right-2 z-20"
                 onClick={toggle}
             />
 
             {isOpened && (
                 <>
-                    <div className="w-screen h-screen bg-slate-700 bg-opacity-50 backdrop-blur-sm absolute top-0 right-0 z-10" />
+                    <div className="w-screen h-screen bg-black bg-opacity-50 backdrop-blur-sm absolute top-0 right-0 z-10" />
 
-                    <nav className="w-[60vw] max-w-[400px] h-screen bg-black flex flex-col absolute top-0 right-0 z-10 p-2 pt-20">
+                    <nav className="w-[60vw] max-w-[400px] h-screen bg-[#0a192f] flex flex-col absolute top-0 right-0 z-10 p-2 pt-10">
                         {items.map(({ label, href }) => (
                             <Link
                                 key={label}
@@ -49,11 +49,13 @@ export const Navigation: React.FC = () => {
                             />
                         ))}
 
-                        <Link
-                            label="&copy; Jan Chalupa 2023"
+                        <a
                             href="https://janchalupa.dev/"
-                            className="mt-auto bg-opacity-0"
-                        />
+                            className="mt-auto text-center text-xs opacity-50 mb-3"
+                            target="_blank"
+                        >
+                            &copy; Jan Chalupa 2023
+                        </a>
                     </nav>
                 </>
             )}

@@ -1,5 +1,5 @@
 export enum ERoleLabels {
-    user = "User",
+    user = "You",
     assistant = "Assistant",
 }
 

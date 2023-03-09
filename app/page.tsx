@@ -32,8 +32,8 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="flex flex-col h-screen">
-            <h1 className="text-xl pt-3 pb-2">{config.appName}</h1>
+        <div className="flex flex-col h-screen pb-5">
+            <h1 className="text-xl pb-2 text-[#e11d48]">{config.appName}</h1>
 
             {apiKey ? (
                 <>

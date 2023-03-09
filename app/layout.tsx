@@ -26,7 +26,7 @@ export default function RootLayout({
             <meta name="apple-mobile-web-app-capable" content="yes" />
 
             <html lang="en">
-                <body className="px-3 bg-black text-slate-200 text-sm w-full h-full fixed">
+                <body className="px-5 bg-[#0a192f] text-slate-200 text-sm w-full h-full fixed overscroll-none">
                     <Navigation />
 
                     <ContextWrapper>{children}</ContextWrapper>

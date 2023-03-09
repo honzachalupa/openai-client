@@ -64,7 +64,8 @@ export const Item: React.FC<IProps> = ({
             {role === "assistant" && (
                 <Button
                     label="Try a different response"
-                    className="mt-2 self-end"
+                    size="small"
+                    className="mt-3 self-end"
                     onClick={() => regenerate(request!)}
                 />
             )}

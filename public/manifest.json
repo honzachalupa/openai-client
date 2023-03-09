@@ -1,11 +1,11 @@
 {
-    "theme_color": "black",
-    "background_color": "black",
+    "theme_color": "#0a192f",
+    "background_color": "#0a192f",
     "display": "standalone",
     "scope": "/",
     "start_url": "/?pwa=true",
-    "name": "AI Assistant",
-    "short_name": "AI Assistant",
+    "name": "OpenAI Client",
+    "short_name": "OpenAI",
     "description": "",
     "icons": [
         {

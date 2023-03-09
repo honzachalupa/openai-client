@@ -54,10 +54,10 @@ export function SwitchButton<T>({
     }, [selectedValue]);
 
     return (
-        <div className={cx("relative bg-white bg-opacity-10", className)}>
+        <div className={cx("relative bg-black bg-opacity-20", className)}>
             {backgroundStyle && (
                 <div
-                    className="bg-white opacity-10 h-full absolute top-0 -z-10 transition-all"
+                    className="bg-black opacity-20 h-full absolute top-0 -z-10 transition-all"
                     style={{
                         width: backgroundStyle.width,
                         left: backgroundStyle.left,
@@ -70,9 +70,7 @@ export function SwitchButton<T>({
                     <button
                         key={value as string}
                         type="button"
-                        className={cx("basis-full p-2", {
-                            "font-semibold": value === selectedValue,
-                        })}
+                        className="basis-full px-5 py-3"
                         onClick={(e) => {
                             setSelectedValue(value);
 

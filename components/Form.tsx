@@ -18,7 +18,7 @@ export const Form: React.FC = () => {
     const [mode, setMode] = useState<TMode>("text");
     const [value, setValue] = useState<string>(content);
 
-    const debouncedValue = useDebounce<string>(value, 500);
+    const debouncedValue = useDebounce<string>(value, 100);
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value!);
@@ -43,17 +43,19 @@ export const Form: React.FC = () => {
     };
 
     return (
-        <div className="mt-auto flex flex-col pb-8">
+        <div className="mt-auto flex flex-col pb-5">
             <textarea
                 title="Message"
                 value={value}
                 placeholder="What's your request?"
-                className="resize-none w-full bg-transparent border border-1 p-2 my-2 h-[100px] text-[16px] rounded-none"
+                className="resize-none w-full bg-transparent border border-white border-opacity-10 p-2 my-2 h-[120px] text-[16px] rounded-none"
                 disabled={isLoading}
                 onChange={onMessageChange}
             />
 
-            <p className="text-xs opacity-50 pb-1">Mode:</p>
+            <p className="text-xs opacity-50 pb-1">
+                What would you like to generate?
+            </p>
 
             <div className="flex">
                 <SwitchButton
