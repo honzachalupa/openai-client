@@ -5,8 +5,8 @@ import "./layout.css";
 
 export const metadata = {
     title: config.appName,
-    description: "Better looking Chat GPT client.",
-    keywords: [],
+    description: config.description,
+    keywords: config.keywords,
 };
 
 export default function RootLayout({
