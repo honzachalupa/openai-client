@@ -1,8 +1,11 @@
 import { ERoleLabels, ETypeLabels } from "@/types/conversation";
 
+export type TRole = keyof typeof ERoleLabels;
+export type TType = keyof typeof ETypeLabels;
+
 export interface IConversationItem {
-    role: keyof typeof ERoleLabels;
-    type: keyof typeof ETypeLabels;
+    role: TRole;
+    type: TType;
     content: string;
     imageUrl?: string;
     timestamp?: string;

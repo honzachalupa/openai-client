@@ -51,7 +51,7 @@ export const Item: React.FC<IProps> = ({
             <p className="opacity-50 mb-1 text-xs">{ERoleLabels[role]}</p>
 
             {type === "message" || (type === "image" && !imageUrl) ? (
-                <MessageContent value={content} />
+                <MessageContent value={content} type={type} />
             ) : type === "image" ? (
                 <ImageContent
                     url={imageUrl!}
@@ -61,7 +61,7 @@ export const Item: React.FC<IProps> = ({
                 <p className="text-red-500">{content}</p>
             ) : null}
 
-            {role === "assistant" && type !== "error" && (
+            {role === "assistant" && (
                 <Button
                     label="Try a different response"
                     className="mt-2 self-end"

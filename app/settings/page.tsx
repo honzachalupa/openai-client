@@ -9,7 +9,7 @@ export default function Settings() {
     const [apiKey, setApiKey] = useState<string>("");
 
     const onTokenChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setApiKey(e.target.value);
+        setApiKey(e.target.value.trim());
     };
 
     const handleSubmit = () => {

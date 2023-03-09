@@ -16,7 +16,7 @@ export const Button: React.FC<IProps> = ({
     <button
         type="button"
         className={cx(
-            "px-5 py-2 bg-white bg-opacity-10 disabled:opacity-50",
+            "px-5 py-2 bg-white bg-opacity-20 disabled:opacity-50",
             className
         )}
         disabled={isDisabled}

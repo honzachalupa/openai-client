@@ -2,16 +2,20 @@ import { useDebounce } from "@react-hooks-library/core";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Button } from "./Button";
 import { Context } from "./Conversation/Context";
+import { SwitchButton } from "./SwitchButton";
 
 export interface IFormRef {
     content: string;
     setContent: (value: string) => void;
 }
 
+type TMode = "text" | "image";
+
 export const Form: React.FC = () => {
     const { content, generateImage, generateMessage, isLoading, setContent } =
         useContext(Context);
 
+    const [mode, setMode] = useState<TMode>("text");
     const [value, setValue] = useState<string>(content);
 
     const debouncedValue = useDebounce<string>(value, 500);
@@ -30,8 +34,16 @@ export const Form: React.FC = () => {
         }
     }, [content]);
 
+    const handleSubmit = () => {
+        if (mode === "text") {
+            generateMessage();
+        } else if (mode === "image") {
+            generateImage();
+        }
+    };
+
     return (
-        <div className="mt-auto flex flex-col pb-3">
+        <div className="mt-auto flex flex-col pb-8">
             <textarea
                 title="Message"
                 value={value}
@@ -41,18 +53,30 @@ export const Form: React.FC = () => {
                 onChange={onMessageChange}
             />
 
-            <div className="flex justify-end">
-                <Button
-                    label="Generate image"
-                    isDisabled={isLoading || content.length < 5}
-                    className="mr-2"
-                    onClick={() => generateImage()}
+            <p className="text-xs opacity-50 pb-1">Mode:</p>
+
+            <div className="flex">
+                <SwitchButton
+                    defaultValue={mode}
+                    options={[
+                        {
+                            value: "text",
+                            label: "Text",
+                        },
+                        {
+                            value: "image",
+                            label: "Image",
+                        },
+                    ]}
+                    className="basis-2/3 mr-1"
+                    onChange={setMode}
                 />
 
                 <Button
                     label="Send"
                     isDisabled={isLoading || content.length < 5}
-                    onClick={() => generateMessage()}
+                    className="basis-1/3 ml-1"
+                    onClick={handleSubmit}
                 />
             </div>
         </div>
