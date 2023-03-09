@@ -1,4 +1,5 @@
 import { ContextWrapper } from "@/components/Conversation/Context";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Navigation } from "@/components/Navigation";
 import config from "@/config";
 import "./layout.css";
@@ -32,6 +33,8 @@ export default function RootLayout({
                     <ContextWrapper>{children}</ContextWrapper>
                 </body>
             </html>
+
+            <GoogleAnalytics />
         </>
     );
 }
