@@ -9,7 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@honzachalupa/common": "^2.0.0-alpha.4",
+        "@honzachalupa/common": "^2.0.0-alpha.5",
         "@react-hooks-library/core": "^0.5.1",
         "@types/node": "18.14.6",
         "@types/react": "18.0.28",

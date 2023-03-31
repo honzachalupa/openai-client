@@ -939,10 +939,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.35.0.tgz#b7569632b0b788a0ca0e438235154e45d42813a7"
   integrity sha512-JXdzbRiWclLVoD8sNUjR443VVlYqiYmDVT6rGUEIEHU5YJW0gaVZwV2xgM7D4arkvASqD0IlLUVjHiFuxaftRw==
 
-"@honzachalupa/common@^2.0.0-alpha.4":
-  version "2.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@honzachalupa/common/-/common-2.0.0-alpha.4.tgz#016be1580ca04f1df4049b56360c8c872cffde0c"
-  integrity sha512-TUcI/uc8eqMn913ns/9VXNPlCsQkYm3y2G4CeK04E4YR7dJZLR+rWzuh4d9S/S1YvYW+87Zyw1+bOrciWFbQMg==
+"@honzachalupa/common@^2.0.0-alpha.5":
+  version "2.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@honzachalupa/common/-/common-2.0.0-alpha.5.tgz#5b9b2d6c3577be6432a781a295a1ec4248e77f5f"
+  integrity sha512-yGP2jySjI2f5zn5l2I1RAS4qCT83LhSAn5SlT0TL50S4bdFZYg7fCgLlUTSay+TNKwcVY3daAclVB3p5Vw1Xkg==
   dependencies:
     classnames "^2.3.2"
     react "^18.2.0"
