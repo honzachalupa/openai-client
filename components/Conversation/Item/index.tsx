@@ -1,5 +1,5 @@
-import { Button } from "@/components/Button";
 import { ERoleLabels } from "@/types/conversation";
+import { Button } from "@honzachalupa/common";
 import { useScrollIntoView } from "@react-hooks-library/core";
 import cx from "classnames";
 import moment from "moment";

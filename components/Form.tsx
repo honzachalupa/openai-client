@@ -1,8 +1,7 @@
+import { Button, SwitchButton, TextArea } from "@honzachalupa/common";
 import { useDebounce } from "@react-hooks-library/core";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { Button } from "./Button";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "./Conversation/Context";
-import { SwitchButton } from "./SwitchButton";
 
 export interface IFormRef {
     content: string;
@@ -16,17 +15,17 @@ export const Form: React.FC = () => {
         useContext(Context);
 
     const [mode, setMode] = useState<TMode>("text");
-    const [value, setValue] = useState<string>(content);
+    const [debouncedValue, setValue] = useState<string>(content);
 
-    const debouncedValue = useDebounce<string>(value, 100);
-
-    const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.target.value!);
-    };
+    const value = useDebounce<string>(debouncedValue, 100);
 
     useEffect(() => {
-        setContent(debouncedValue);
-    }, [debouncedValue]);
+        setContent(value);
+
+        if (value.includes("image") || value.includes("picture")) {
+            setMode("image");
+        }
+    }, [value]);
 
     useEffect(() => {
         if (!content) {
@@ -44,22 +43,20 @@ export const Form: React.FC = () => {
 
     return (
         <div className="mt-auto flex flex-col pb-5">
-            <textarea
-                title="Message"
-                value={value}
+            <TextArea
+                defaultValue={value}
                 placeholder="What's your request?"
-                className="resize-none w-full bg-transparent border border-white border-opacity-10 p-2 my-2 h-[120px] text-[16px] rounded-none"
-                disabled={isLoading}
-                onChange={onMessageChange}
+                isDisabled={isLoading}
+                onChange={setValue}
             />
 
-            <p className="text-xs opacity-50 pb-1">
-                What would you like to generate?
+            <p className="text-xs opacity-50 py-1">
+                What type of response do you want to receive?
             </p>
 
             <div className="flex">
                 <SwitchButton
-                    defaultValue={mode}
+                    value={mode}
                     options={[
                         {
                             value: "text",

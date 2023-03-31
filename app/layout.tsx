@@ -1,6 +1,6 @@
-import { ContextWrapper } from "@/components/Conversation/Context";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Navigation } from "@/components/Navigation";
+import { Providers } from "@/components/Providers";
 import config from "@/config";
 import "./layout.css";
 
@@ -27,10 +27,10 @@ export default function RootLayout({
             <meta name="apple-mobile-web-app-capable" content="yes" />
 
             <html lang="en">
-                <body className="px-5 bg-[#0a192f] text-slate-200 text-sm w-full h-full fixed overscroll-none">
+                <body className="px-5 text-slate-200 text-sm w-full h-full fixed overscroll-none">
                     <Navigation />
 
-                    <ContextWrapper>{children}</ContextWrapper>
+                    <Providers>{children}</Providers>
                 </body>
             </html>
 

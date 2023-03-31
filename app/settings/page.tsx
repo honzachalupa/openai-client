@@ -1,16 +1,12 @@
 "use client";
 
-import { Button } from "@/components/Button";
+import { Button, TextArea } from "@honzachalupa/common";
 import { useLocalStorage } from "@react-hooks-library/core";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Settings() {
     const [apiKeyLS, setApiKeyLS] = useLocalStorage<string>("apiKey", "");
     const [apiKey, setApiKey] = useState<string>("");
-
-    const onTokenChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setApiKey(e.target.value.trim());
-    };
 
     const handleSubmit = () => {
         setApiKeyLS(apiKey);
@@ -35,12 +31,10 @@ export default function Settings() {
             </p>
 
             <label>OpenAI API key</label>
-            <textarea
-                title="OpenAI API key"
+            <TextArea
                 defaultValue={apiKeyLS}
                 placeholder="sk-..."
-                className="resize-none w-full bg-transparent border border-white border-opacity-10 p-2 my-2 h-[100px] text-[16px] rounded-none"
-                onChange={onTokenChange}
+                onChange={setApiKey}
             />
 
             <Button label="Save" onClick={handleSubmit} />
