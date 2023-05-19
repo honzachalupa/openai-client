@@ -3,9 +3,9 @@ import { IGptMessage } from "@honzachalupa/admin";
 
 const generateMessage = (
     content: IGptMessage["content"],
-    history: IGptMessage[]
+    history?: IGptMessage[]
 ) =>
-    callAPI("POST", "/api/gpt/chat", {
+    callAPI("POST", "/api/openai/gpt", {
         body: {
             message: {
                 role: "user",
@@ -16,7 +16,7 @@ const generateMessage = (
     });
 
 const generateImage = (prompt: string) =>
-    callAPI("POST", "/api/gpt/image", {
+    callAPI("POST", "/api/openai/image", {
         body: {
             prompt,
         },

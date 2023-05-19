@@ -42,7 +42,7 @@ export const Form: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-5">
             <TextArea
                 defaultValue={value}
                 placeholder="What's your request?"
