@@ -108,8 +108,6 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
             }
         );
 
-        console.log(666, data);
-
         addConversationItem({
             role: "assistant",
             type: "message",

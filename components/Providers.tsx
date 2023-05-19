@@ -11,7 +11,7 @@ interface Props {
 
 export const Providers: React.FC<Props> = ({ children }) => (
     <DesignSystemContextProvider>
-        <AuthContextProvider>
+        <AuthContextProvider namespaceId="openai-client">
             <ConversationContextProvider>
                 {children}
             </ConversationContextProvider>
