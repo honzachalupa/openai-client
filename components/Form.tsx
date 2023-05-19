@@ -1,7 +1,7 @@
-import { Button, SwitchButton, TextArea } from "@honzachalupa/common";
+import { Button, SwitchButton, TextArea } from "@honzachalupa/design-system";
 import { useDebounce } from "@react-hooks-library/core";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "./Conversation/Context";
+import { ConversationContext } from "../contexts/Conversation";
 
 export interface IFormRef {
     content: string;
@@ -12,7 +12,7 @@ type TMode = "text" | "image";
 
 export const Form: React.FC = () => {
     const { content, generateImage, generateMessage, isLoading, setContent } =
-        useContext(Context);
+        useContext(ConversationContext);
 
     const [mode, setMode] = useState<TMode>("text");
     const [debouncedValue, setValue] = useState<string>(content);
@@ -42,7 +42,7 @@ export const Form: React.FC = () => {
     };
 
     return (
-        <div className="mt-auto flex flex-col pb-5">
+        <div className="flex flex-col">
             <TextArea
                 defaultValue={value}
                 placeholder="What's your request?"

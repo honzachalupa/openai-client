@@ -1,10 +1,10 @@
 import { ERoleLabels } from "@/types/conversation";
-import { Button } from "@honzachalupa/common";
+import { Button } from "@honzachalupa/design-system";
 import { useScrollIntoView } from "@react-hooks-library/core";
 import cx from "classnames";
 import moment from "moment";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Context } from "../Context";
+import { ConversationContext } from "../../../contexts/Conversation";
 import { ImageContent } from "./ImageContent";
 import { MessageContent } from "./MessageContent";
 import { IConversationItem } from "./types";
@@ -18,7 +18,7 @@ export const Item: React.FC<IProps> = ({
     data: { content, imageUrl, role, type, timestamp, request },
     isLastItem,
 }) => {
-    const { regenerate, setIsLoading } = useContext(Context);
+    const { regenerate, setIsLoading } = useContext(ConversationContext);
 
     const scrollRef = useRef(null);
 

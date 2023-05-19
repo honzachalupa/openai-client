@@ -1,5 +1,3 @@
-import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { Navigation } from "@/components/Navigation";
 import { Providers } from "@/components/Providers";
 import config from "@/config";
 import "./layout.css";
@@ -17,24 +15,35 @@ export default function RootLayout({
 }) {
     return (
         <>
-            <link rel="manifest" href="/manifest.json" />
+            <link rel="manifest" href="/site.webmanifest" />
 
-            <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1.0"
+            <link rel="shortcut icon" href="/favicons/favicon.ico" />
+
+            <link
+                rel="icon"
+                type="image/png"
+                sizes="32x32"
+                href="/favicons/favicon-32x32.png"
+            />
+            <link
+                rel="icon"
+                type="image/png"
+                sizes="16x16"
+                href="/favicons/favicon-16x16.png"
             />
 
             <meta name="apple-mobile-web-app-capable" content="yes" />
 
-            <html lang="en">
-                <body className="px-5 text-slate-200 text-sm w-full h-full fixed overscroll-none">
-                    <Navigation />
+            <meta
+                name="apple-mobile-web-app-status-bar-style"
+                content="black-translucent"
+            />
 
+            <html lang="en">
+                <body className="w-full h-full overscroll-none">
                     <Providers>{children}</Providers>
                 </body>
             </html>
-
-            <GoogleAnalytics />
         </>
     );
 }

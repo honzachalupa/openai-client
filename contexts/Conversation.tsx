@@ -1,12 +1,10 @@
 "use client";
 
-import { CREATE_CHAT_COMPLETION_ROUTE } from "@/app/api/create-chat-completion/route";
-import { CREATE_IMAGE } from "@/app/api/create-image/route";
-import { callAPI } from "@/utils/api";
+import { GPTActions } from "@/actions/gpt";
 import { useLocalStorage } from "@react-hooks-library/core";
 import moment from "moment";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { IConversationItem } from "./Item/types";
+import { IConversationItem } from "../components/Conversation/Item/types";
 
 interface IProps {
     children: ReactNode;
@@ -23,13 +21,15 @@ const initialContext = {
     setIsLoading: (value: boolean) => {},
 };
 
-type IContext = typeof initialContext;
+type IConversationContext = typeof initialContext;
 
-export const Context = createContext<IContext>(initialContext);
+export const ConversationContext =
+    createContext<IConversationContext>(initialContext);
 
-export const ContextWrapper: React.FC<IProps> = ({ children }) => {
+export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
     const [apiKey] = useLocalStorage("apiKey", "");
-    const [context, setContext] = useState<IContext>(initialContext);
+    const [context, setContext] =
+        useState<IConversationContext>(initialContext);
     const [isMounted, setIsMounted] = useState<boolean>();
 
     const setContent = (value: string) => {
@@ -97,18 +97,18 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
 
         addConversationItem(request);
 
-        const data = await callAPI(CREATE_CHAT_COMPLETION_ROUTE, {
-            apiKey,
-            data: {
-                content,
-                history: context.items.map(({ content, role }) => ({
-                    content,
-                    role,
-                })),
-            },
-        }).catch(() => {
-            handleException(request);
-        });
+        const history = context.items.map(({ content, role }) => ({
+            content,
+            role,
+        }));
+
+        const data = await GPTActions.generateMessage(content, history).catch(
+            () => {
+                handleException(request);
+            }
+        );
+
+        console.log(666, data);
 
         addConversationItem({
             role: "assistant",
@@ -131,13 +131,7 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
 
         addConversationItem(request);
 
-        const data = await callAPI(CREATE_IMAGE, {
-            apiKey,
-            data: {
-                description: content,
-                size: 512,
-            },
-        }).catch(() => {
+        const data = await GPTActions.generateImage(content).catch(() => {
             handleException(request);
         });
 
@@ -189,8 +183,8 @@ export const ContextWrapper: React.FC<IProps> = ({ children }) => {
     }, [context.items]);
 
     return (
-        <Context.Provider value={{ ...context, ...functions }}>
+        <ConversationContext.Provider value={{ ...context, ...functions }}>
             {children}
-        </Context.Provider>
+        </ConversationContext.Provider>
     );
 };

@@ -1,16 +1,29 @@
-const callAPI = async (url: string, data: any): Promise<any> => {
-    const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-    });
+export const callAPI = (
+    method: "GET" | "POST" | "PATCH" | "DELETE",
+    path: string,
+    data?: {
+        params?: {
+            [key: string]: string | boolean;
+        };
+        body?: {
+            [key: string]: any;
+        };
+    }
+) => {
+    const url = new URL(process.env.NEXT_PUBLIC_ADMIN_API_URL + path);
 
-    const responseData = await response.json();
-
-    if (!response.ok) {
-        throw new Error(responseData);
+    if (data?.params) {
+        Object.entries(data.params).forEach(([key, value]) => {
+            url.searchParams.set(key, value.toString());
+        });
     }
 
-    return responseData;
+    return fetch(url, {
+        method,
+        body: data?.body && JSON.stringify(data.body),
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+        },
+    }).then((response) => response.json());
 };
-
-export { callAPI };

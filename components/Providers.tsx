@@ -1,13 +1,20 @@
 "use client";
 
-import { ContextWrapper } from "@/components/Conversation/Context";
-import "@honzachalupa/common/tailwind-globals.css";
+import { ConversationContextProvider } from "@/contexts/Conversation";
+import { AuthContextProvider } from "@honzachalupa/admin";
+import { DesignSystemContextProvider } from "@honzachalupa/design-system";
 import { ReactNode } from "react";
 
 interface Props {
     children: ReactNode;
 }
 
-export const Providers: React.FC<Props> = ({ children }) => {
-    return <ContextWrapper>{children}</ContextWrapper>;
-};
+export const Providers: React.FC<Props> = ({ children }) => (
+    <DesignSystemContextProvider>
+        <AuthContextProvider>
+            <ConversationContextProvider>
+                {children}
+            </ConversationContextProvider>
+        </AuthContextProvider>
+    </DesignSystemContextProvider>
+);
