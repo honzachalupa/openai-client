@@ -1,5 +1,4 @@
 import { ERoleLabels } from "@/types/conversation";
-import { Button } from "@honzachalupa/design-system";
 import { useScrollIntoView } from "@react-hooks-library/core";
 import cx from "classnames";
 import moment from "moment";
@@ -9,16 +8,14 @@ import { ImageContent } from "./ImageContent";
 import { MessageContent } from "./MessageContent";
 import { IConversationItem } from "./types";
 
-interface IProps {
-    data: IConversationItem;
-    isLastItem: boolean;
-}
-
-export const Item: React.FC<IProps> = ({
-    data: { content, imageUrl, role, type, timestamp, request },
-    isLastItem,
+export const Item: React.FC<IConversationItem> = ({
+    content,
+    imageUrl,
+    role,
+    type,
+    timestamp,
 }) => {
-    const { regenerate, setIsLoading } = useContext(ConversationContext);
+    const { setIsLoading } = useContext(ConversationContext);
 
     const scrollRef = useRef(null);
 
@@ -31,16 +28,12 @@ export const Item: React.FC<IProps> = ({
 
     useScrollIntoView(scrollRef, {
         block: "start",
-        predicate: isLastItem,
     });
 
     return (
         <article
             ref={scrollRef}
-            className={cx("my-5 last:border-none last:pb-0 flex flex-col", {
-                "border-gray-600 border-b-[1px] border-dashed pb-5":
-                    role === "assistant",
-            })}
+            className="theme-page-background flex flex-col p-3"
         >
             {role === "user" && (
                 <p className="text-xs opacity-50 text-center">
@@ -60,15 +53,6 @@ export const Item: React.FC<IProps> = ({
             ) : type === "error" ? (
                 <p className="text-red-500">{content}</p>
             ) : null}
-
-            {role === "assistant" && (
-                <Button
-                    label="Try a different response"
-                    size="small"
-                    className="mt-3 self-end"
-                    onClick={() => regenerate(request!)}
-                />
-            )}
         </article>
     );
 };
@@ -76,12 +60,10 @@ export const Item: React.FC<IProps> = ({
 export const LoadingItem: React.FC = () => {
     const [dotsCount, setDotsCount] = useState<number>(1);
 
-    const intervalTick = () => {
-        setDotsCount((prevState) => (prevState < 3 ? prevState + 1 : 0));
-    };
-
     useEffect(() => {
-        const interval = setInterval(intervalTick, 400);
+        const interval = setInterval(() => {
+            setDotsCount((prevState) => (prevState < 3 ? prevState + 1 : 0));
+        }, 400);
 
         return () => {
             clearInterval(interval);
@@ -90,7 +72,7 @@ export const LoadingItem: React.FC = () => {
 
     return (
         <article
-            className={cx("my-5 last:border-none last:pb-0 flex flex-col", {
+            className={cx("my-5 p-3 last:border-none last:pb-0 flex flex-col", {
                 "border-gray-600 border-b-[1px] border-dashed pb-5": true,
             })}
         >

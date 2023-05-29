@@ -42,7 +42,7 @@ export const Form: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col mb-5">
+        <div className="flex flex-col my-3">
             <TextArea
                 defaultValue={value}
                 placeholder="What's your request?"
@@ -73,7 +73,7 @@ export const Form: React.FC = () => {
 
                 <Button
                     label="Send"
-                    isDisabled={isLoading || content.length < 5}
+                    isDisabled={isLoading}
                     className="basis-1/3 ml-1"
                     onClick={handleSubmit}
                 />

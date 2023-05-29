@@ -1,9 +1,9 @@
 "use client";
 
 import { GPTActions } from "@/actions/gpt";
-import { useLocalStorage } from "@react-hooks-library/core";
 import moment from "moment";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { IConversationItem } from "../components/Conversation/Item/types";
 
 interface IProps {
@@ -16,6 +16,8 @@ const initialContext = {
     isLoading: false,
     generateMessage: () => {},
     generateImage: () => {},
+    removeGroup: (id: string) => {},
+    removeAll: () => {},
     regenerate: (item: IConversationItem) => {},
     setContent: (value: string) => {},
     setIsLoading: (value: boolean) => {},
@@ -27,7 +29,6 @@ export const ConversationContext =
     createContext<IConversationContext>(initialContext);
 
 export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
-    const [apiKey] = useLocalStorage("apiKey", "");
     const [context, setContext] =
         useState<IConversationContext>(initialContext);
     const [isMounted, setIsMounted] = useState<boolean>();
@@ -54,14 +55,14 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
     };
 
     const addConversationItem = (item: IConversationItem) => {
-        const itemWithTimestamp = {
+        const nextItem = {
             ...item,
             timestamp: moment().format(),
         };
 
         setContext((prevContext) => ({
             ...prevContext,
-            items: [...prevContext.items, itemWithTimestamp],
+            items: [...prevContext.items, nextItem],
         }));
     };
 
@@ -77,6 +78,8 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
 
     const handleException = (request: IConversationItem) => {
         addConversationItem({
+            id: uuid(),
+            groupId: null,
             role: "assistant",
             type: "error",
             content: "Unknown error occurred. Please try again later.",
@@ -89,7 +92,11 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
     const generateMessage = async (contentOverwrite?: string) => {
         const content = onBeforeGenerate(contentOverwrite);
 
+        const groupId = uuid();
+
         const request: IConversationItem = {
+            id: uuid(),
+            groupId,
             role: "user",
             type: "message",
             content,
@@ -109,6 +116,8 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
         );
 
         addConversationItem({
+            id: uuid(),
+            groupId,
             role: "assistant",
             type: "message",
             content: data.choices[0].message.content,
@@ -121,7 +130,11 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
     const generateImage = async (contentOverwrite?: string) => {
         const content = onBeforeGenerate(contentOverwrite);
 
+        const groupId = uuid();
+
         const request: IConversationItem = {
+            id: uuid(),
+            groupId,
             role: "user",
             type: "image",
             content,
@@ -134,12 +147,30 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
         });
 
         addConversationItem({
+            id: uuid(),
+            groupId,
             role: "assistant",
             type: "image",
             content,
             imageUrl: data.data[0].url,
             request,
         });
+    };
+
+    const removeGroup = (groupId: IConversationItem["groupId"]) => {
+        setContext((prevContext) => ({
+            ...prevContext,
+            items: [...prevContext.items].filter(
+                (item) => item.groupId !== groupId
+            ),
+        }));
+    };
+
+    const removeAll = () => {
+        setContext((prevContext) => ({
+            ...prevContext,
+            items: [],
+        }));
     };
 
     const regenerate = (item: IConversationItem) => {
@@ -153,6 +184,8 @@ export const ConversationContextProvider: React.FC<IProps> = ({ children }) => {
     const functions = {
         generateMessage,
         generateImage,
+        removeGroup,
+        removeAll,
         regenerate,
         setContent,
         setIsLoading,

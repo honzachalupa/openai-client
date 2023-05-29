@@ -2,18 +2,33 @@
 
 import { Conversation } from "@/components/Conversation";
 import { Form } from "@/components/Form";
-import { Layout_Primary, useServiceWorker } from "@honzachalupa/design-system";
+import { Layout, useServiceWorker } from "@honzachalupa/design-system";
+import { useContext } from "react";
+import { ConversationContext } from "../contexts/Conversation";
 
 export default function Home() {
     useServiceWorker();
 
-    return (
-        <Layout_Primary>
-            <div className="h-full flex flex-col">
-                <Conversation />
+    const { removeAll } = useContext(ConversationContext);
 
-                <Form />
-            </div>
-        </Layout_Primary>
+    return (
+        <Layout.WithNavigation
+            title="OpenAI Client"
+            navigation={{
+                right: {
+                    title: "Options",
+                    items: [
+                        {
+                            label: "Remove all",
+                            onClick: removeAll,
+                        },
+                    ],
+                },
+            }}
+        >
+            <Conversation />
+
+            <Form />
+        </Layout.WithNavigation>
     );
 }
