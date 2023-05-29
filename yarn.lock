@@ -1078,10 +1078,10 @@
     typescript "^4.5.2"
     ua-parser-js "^1.0.35"
 
-"@honzachalupa/design-system@^1.0.33":
-  version "1.0.33"
-  resolved "https://registry.npmjs.org/@honzachalupa/design-system/-/design-system-1.0.33.tgz#8835bac04e52755ea3b3d3e6bde6e84bc713e2c6"
-  integrity sha512-Xj9je23ZE4Y5RngT2k/+jQVpM9BTV32VVbZ7/mUJqd9sSrzxvtrYsTTJicvlX1rp1G0pgARLSrWzqLEH2vzF4w==
+"@honzachalupa/design-system@^1.0.34":
+  version "1.0.34"
+  resolved "https://registry.npmjs.org/@honzachalupa/design-system/-/design-system-1.0.34.tgz#223a3088f629cedd268d3dd61401276941ce9829"
+  integrity sha512-ZpEI/0fx3Jd8aUn1yLoXX/E3/lNcEHgibdfPygLNG/y5D4rQB0Gabbs5d6qo87ZIk9SJNqY4PPnAkzCeyieihw==
   dependencies:
     "@popperjs/core" "^2.11.7"
     "@react-hooks-library/core" "^0.5.1"

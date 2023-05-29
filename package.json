@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "@honzachalupa/admin": "^1.0.27",
-        "@honzachalupa/design-system": "^1.0.33",
+        "@honzachalupa/design-system": "^1.0.34",
         "@react-hooks-library/core": "^0.5.1",
         "@types/node": "18.14.6",
         "@types/react": "18.0.28",
